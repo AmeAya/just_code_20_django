@@ -1,0 +1,21 @@
+Терминал:
+pip install django -> Устанавливаем пакеты Django
+django-admin startproject core . -> Создаем "ядро" Джанго проекта, также файл manage.py(Файл контроллер)
+python manage.py runserver -> Запускаем локальный сервер(Чтобы отключить CTRL+C)
+python manage.py makemigrations -> "Подготовливает" все модельки к переходу в Базу Данных в SQL
+python manage.py migrate -> "Перевести" все модельки в Базу Данных в SQL
+python manage.py createsuperuser -> Создаем Суперюзера(Админ всей системы)
+
+Чтобы создать новое приложение:
+python manage.py startapp cinema_app -> Создать "Приложение" с именем "cinema_app"
+В settings.py в листе INSTALLED_APPS нужно добавить cinema_app в кавычках
+
+
+Файлы:
+asgi.py -> Asynchronous Server Gateway Interface - Настройки Джанго для "Асинхронного" режима
+setting.py -> Настройки всего Джанго проекта
+urls.py -> Файл маршутиризатор(Направляет запрос в нужную часть кода)
+wsgi.py ->  Web Server Gateway Interface - Настройки Джанго для Веб запросов
+В приложениях:
+models.py -> Файл, в котором создаются "модели"(Таблицы SQL) для Джанго проекта
+
