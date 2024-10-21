@@ -17,3 +17,6 @@ class Film(models.Model):  # Film -> имя таблицы в SQL
     genre = models.CharField(max_length=255)
     duration = models.PositiveSmallIntegerField()
     country = models.CharField(max_length=255)
+
+    def __str__(self):  # Что показывать при вызове объекта
+        return self.name

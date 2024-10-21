@@ -10,6 +10,9 @@ python manage.py createsuperuser -> Создаем Суперюзера(Адми
 python manage.py startapp cinema_app -> Создать "Приложение" с именем "cinema_app"
 В settings.py в листе INSTALLED_APPS нужно добавить cinema_app в кавычках
 
+После миграции моделей нужно добавить их в админку, для этого:
+В каждом приложений в файл admin.py нужно добавить from .models import *
+А также, "Зарегистрировать" каждую модель admin.site.register(<ИМЯ МОДЕЛИ>)
 
 Файлы:
 asgi.py -> Asynchronous Server Gateway Interface - Настройки Джанго для "Асинхронного" режима
