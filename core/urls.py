@@ -16,7 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from cinema_app.views import *  # Импортируем все вью из views.py
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('genres', GenreListView.as_view()),  # Добавляем новый маршрут к GenreListView
+    # path('<URL в адресной строке>', <Вью, к которой должен идти маршрут>)
 ]

@@ -1,1 +1,4 @@
 .idea
+core/__pycache__/
+cinema_app/migrations/__pycache__/
+cinema_app/__pycache__/
