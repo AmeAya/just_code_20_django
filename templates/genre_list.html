@@ -12,6 +12,9 @@
 
     {% for elem in genre_list %}
         <h3>{{ elem.name }}</h3>
+        <a href="{% url 'genre_detail_url' elem.id %}">
+            detail
+        </a>
     {% endfor %}
 </body>
 </html>

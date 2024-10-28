@@ -22,4 +22,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('genres', GenreListView.as_view()),  # Добавляем новый маршрут к GenreListView
     # path('<URL в адресной строке>', <Вью, к которой должен идти маршрут>)
+
+    path('genre/<int:pk>',  GenreDetailView.as_view(), name='genre_detail_url'),
+    # <int:pk> -> Integer, который пойдет во вью как pk(Primary Key). Одно и то же что и id
+    # 127.0.0.1:8000/genre/1 -> pk=1
+    # 127.0.0.1:8000/genre/5 -> pk=5
+
+    # name -> Имя маршрута внутри Джанго
+    path('genre_create', GenreCreateView.as_view()),
 ]
