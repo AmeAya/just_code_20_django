@@ -20,7 +20,7 @@ from cinema_app.views import *  # Импортируем все вью из view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('genres', GenreListView.as_view()),  # Добавляем новый маршрут к GenreListView
+    path('genres', GenreListView.as_view(), name='genres_url'),  # Добавляем новый маршрут к GenreListView
     # path('<URL в адресной строке>', <Вью, к которой должен идти маршрут>)
 
     path('genre/<int:pk>',  GenreDetailView.as_view(), name='genre_detail_url'),
@@ -30,4 +30,7 @@ urlpatterns = [
 
     # name -> Имя маршрута внутри Джанго
     path('genre_create', GenreCreateView.as_view()),
+    path('genre_update/<int:pk>', GenreUpdateView.as_view()),  # 127.0.0.1:8000/genre_update/3 -> pk=3
+    path('genre_delete/<int:pk>', GenreDeleteView.as_view()),
+    path('about_us', AboutUsTemplateView.as_view()),
 ]
