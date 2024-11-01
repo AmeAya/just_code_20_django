@@ -33,4 +33,6 @@ urlpatterns = [
     path('genre_update/<int:pk>', GenreUpdateView.as_view()),  # 127.0.0.1:8000/genre_update/3 -> pk=3
     path('genre_delete/<int:pk>', GenreDeleteView.as_view()),
     path('about_us', AboutUsTemplateView.as_view()),
+
+    path('film_list', film_list_view),
 ]

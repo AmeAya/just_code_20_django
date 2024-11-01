@@ -8,7 +8,7 @@ from .models import *
 # Генерики:
 # ListView -> Генерик, который вытаскивает все записи из модели(SELECT ALL)
 # DetailView -> Генерик, который вытаскивает только одну запись по id(SELECT * FROM ... WHERE id=)
-# CreateView -> Генерик, который создает форму для ввода данных чтобы создать запись
+# CreateView -> Генерик, который создает форму для ввода данных, чтобы создать запись
 # UpdateView -> Генерик, который создает форму для ввода данных чтобы обновлить уже существующую запись
 # DeleteView -> Генерик, который по POST запросу удаляет запись
 # TemplateView -> Генерик, который возвращает html страницу
@@ -71,3 +71,44 @@ class AboutUsTemplateView(TemplateView):
 
 
 # создать CountryUpdateView и CountryDeleteView
+
+
+# 1) Создать новый Джанго проект(Установить Джанго, создать "ядро", создать папку для темплейтов и в сеттингах указать
+#    ее(TEMPLATES -> 'DIRS': [BASE_DIR / 'templates'],
+# 2) Создать новый application -> library_app, добавить его в сеттингах(INSTALLED_APPS)
+# 3) Создать новые модельки для library_app(Book, Author). У модельки Book должен быть ForeignKey к Author
+# 4) Создать для книг ListView, DetailView, CreateView, DeleteView, UpdateView(Включая url и темплейты)
+
+
+def film_list_view(request):
+    # request -> Запрос, который приходит по url во view
+
+    # films = Film.objects.all()  # QuerySet всех фильмов
+    # # <МОДЕЛЬКА>.objects.all() ->  Получить все записи из <МОДЕЛЬКА>
+
+    # films = Film.objects.filter(rating__gt=5)
+    # # QuerySet фильмов с рейтингом больше 5
+    #
+    # # <МОДЕЛЬКА>.objects.filter(<УСЛОВИЕ>) ->  Получить все записи из
+    # #                     <МОДЕЛЬКА>, у которых <УСЛОВИЕ> выполняется
+    # # __gt -> Greater Than -> Больше чем (>)
+    # # __lt -> Less Than -> Меньше чем (<)
+    # # __gte -> Greater Than or Equal -> Больше чем или равно (>=)
+    # # __ltу -> Less Than or Equal -> Меньше чем или равно (<=)
+
+    # films = Film.objects.get(id=0)
+    # # <МОДЕЛЬКА>.objects.get(<УСЛОВИЕ>) -> Получить только одну записи из
+    # #                         <МОДЕЛЬКА>, у которых <УСЛОВИЕ> выполняется
+    # # Если по <УСЛОВИЕ> найдется больше чем 1 запись -> ОШИБКА!
+    # # Если по <УСЛОВИЕ> найдется меньше чем 1 запись -> ОШИБКА!
+
+    genre_thriller = Genre.objects.get(name='Thriller')
+    films = Film.objects.filter(genre=genre_thriller)
+
+    context = {
+        'film_list': films,
+        'abc': 'Hello, world!',
+        'qwe': 125
+    }  # context -> dict, который приходит на темплейт
+    # render -> Функция Джанго, которая "рисует" темплейт с данными context
+    return render(request, 'film_list.html', context=context)
