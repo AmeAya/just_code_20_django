@@ -94,11 +94,11 @@ def film_list_view(request):
     # # __gt -> Greater Than -> Больше чем (>)
     # # __lt -> Less Than -> Меньше чем (<)
     # # __gte -> Greater Than or Equal -> Больше чем или равно (>=)
-    # # __ltу -> Less Than or Equal -> Меньше чем или равно (<=)
+    # # __lte -> Less Than or Equal -> Меньше чем или равно (<=)
 
     # films = Film.objects.get(id=0)
     # # <МОДЕЛЬКА>.objects.get(<УСЛОВИЕ>) -> Получить только одну записи из
-    # #                         <МОДЕЛЬКА>, у которых <УСЛОВИЕ> выполняется
+    # #                        <МОДЕЛЬКА>, у которых <УСЛОВИЕ> выполняется
     # # Если по <УСЛОВИЕ> найдется больше чем 1 запись -> ОШИБКА!
     # # Если по <УСЛОВИЕ> найдется меньше чем 1 запись -> ОШИБКА!
 
@@ -112,3 +112,51 @@ def film_list_view(request):
     }  # context -> dict, который приходит на темплейт
     # render -> Функция Джанго, которая "рисует" темплейт с данными context
     return render(request, 'film_list.html', context=context)
+
+
+def film_detail_view(request, film_id):
+    try:
+        film = Film.objects.get(id=film_id)
+        context = {
+            'film': film
+        }
+    except Film.DoesNotExist:
+        # В любой модели Джанго есть ошибка DoesNotExist
+        context = {}
+    return render(request, 'film_detail.html', context=context)
+
+
+def film_create_view(request):
+    if request.method == 'GET':
+        genres = Genre.objects.all()
+        countries = Country.objects.all()
+        context = {
+            'genres': genres,
+            'countries': countries
+        }
+        return render(request, 'film_create.html', context=context)
+    elif request.method == 'POST':
+        name = request.POST.get('film_name')
+        description = request.POST.get('film_description')
+        rating = request.POST.get('film_rating')
+        genre_id = request.POST.get('film_genre')
+        duration = request.POST.get('film_duration')
+        country_id = request.POST.get('film_country')
+
+        genre = Genre.objects.get(id=genre_id)  # Находим этот жанр по айди
+        country = Country.objects.get(id=country_id)  # Находим эту страну по айди
+        # Чтобы заполнить Foreign Key нужно запихивать не айди,
+        # нужно вытащить его из базы запросом
+
+        film = Film(
+            name=name,
+            description=description,
+            rating=rating,
+            genre=genre,
+            duration=duration,
+            country=country
+        )  # Создаем новый объект модели Film
+        film.save()  # Сохраняем этот объект как запись в SQL
+
+        from django.shortcuts import redirect
+        return redirect(film_list_view)

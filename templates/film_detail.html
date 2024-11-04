@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if film %}
+        <h1>{{ film.name }}</h1>
+        <h3>{{ film.description }}</h3>
+    {% else %}
+        <h1>Film does not exist!</h1>
+    {% endif %}
+</body>
+</html>

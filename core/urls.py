@@ -35,4 +35,6 @@ urlpatterns = [
     path('about_us', AboutUsTemplateView.as_view()),
 
     path('film_list', film_list_view),
+    path('film_detail/<int:film_id>', film_detail_view),
+    path('film_create', film_create_view),
 ]
