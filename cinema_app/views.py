@@ -160,3 +160,83 @@ def film_create_view(request):
 
         from django.shortcuts import redirect
         return redirect(film_list_view)
+
+
+def film_update_view(request, film_id):
+    if request.method == 'GET':
+        try:
+            film = Film.objects.get(id=film_id)
+            genres = Genre.objects.all()
+            countries = Country.objects.all()
+            context = {
+                'film': film,
+                'genres': genres,
+                'countries': countries
+            }
+        except Film.DoesNotExist:
+            context = {}
+        return render(request, 'film_update.html', context=context)
+    elif request.method == 'POST':
+        name = request.POST.get('film_name')
+        description = request.POST.get('film_description')
+        rating = request.POST.get('film_rating')
+        genre_id = request.POST.get('film_genre')
+        duration = request.POST.get('film_duration')
+        country_id = request.POST.get('film_country')
+
+        genre = Genre.objects.get(id=genre_id)
+        country = Country.objects.get(id=country_id)
+
+        film = Film.objects.get(id=film_id)
+        film.name = name
+        film.description = description
+        film.rating = rating
+        film.duration = duration
+        film.genre = genre
+        film.country = country
+
+        film.save()
+
+        from django.shortcuts import redirect
+        return redirect(film_list_view)
+
+
+def film_delete_view(request, film_id):
+    film = Film.objects.get(id=film_id)
+    film.delete()  # delete() -> Метод delete удаляет объект как запись из БД
+
+    from django.shortcuts import redirect
+    return redirect(film_list_view)
+
+
+def login_view(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        from django.contrib.auth import authenticate
+
+        # authenticate -> Хэширует указанный пароль и ищет пользователя
+        user = authenticate(request, username=username, password=password)
+        # Если authenticate находит, он возвращает юзера. Иначе, возвращает None
+
+        if user is None:  # Если неправильные логин И/ИЛИ пароль
+            from django.shortcuts import redirect
+            return redirect(login_view)
+        else:
+            from django.contrib.auth import login
+            # login -> 1) Создает cookie(csrftoken и sessionid) и запоминает к себе в БД
+            #          2) Возвращает в заголовке Set-Cookie
+
+            login(request, user)
+            from django.shortcuts import redirect
+            return redirect(film_list_view)
+
+
+def logout_view(request):
+    from django.contrib.auth import logout
+    # logout -> Находит у себя cookie(csrftoken и sessionid) и удаляет их
+    logout(request)
+    from django.shortcuts import redirect
+    return redirect(login_view)

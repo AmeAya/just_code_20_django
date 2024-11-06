@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <label>Name:</label>
+        <input type="text" name="film_name" required
+            value="{{ film.name }}">
+        <br><br>
+
+        <label>Description:</label>
+        <textarea name="film_description" required>{{ film.description }}</textarea>
+        <br><br>
+
+        <label>Rating:</label>
+        <input type="number" step=".1" name="film_rating" required
+            value="{{ film.rating }}">
+        <br><br>
+
+        <label>Genre:</label>
+        <select name="film_genre">
+            {% for elem in genres %}
+                {% if elem.id == film.genre.id %}
+                    <option value="{{ elem.id }}" selected>
+                        {{ elem.name }}
+                    </option>
+                {% else %}
+                    <option value="{{ elem.id }}">
+                        {{ elem.name }}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Duration:</label>
+        <input max="500" type="number" name="film_duration" required
+               value="{{ film.duration }}">
+        <br><br>
+
+        <label>Country:</label>
+        <select name="film_country">
+            {% for elem in countries %}
+                {% if elem.id == film.country.id %}
+                    <option value="{{ elem.id }}" selected>
+                        {{ elem.name }}
+                    </option>
+                {% else %}
+                    <option value="{{ elem.id }}">
+                        {{ elem.name }}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <input type="submit" value="Update Film">
+    </form>
+</body>
+</html>

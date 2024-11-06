@@ -8,6 +8,7 @@
     {% if film %}
         <h1>{{ film.name }}</h1>
         <h3>{{ film.description }}</h3>
+        <a href="{% url 'film_delete_url' film.id %}">Delete!</a>
     {% else %}
         <h1>Film does not exist!</h1>
     {% endif %}

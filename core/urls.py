@@ -37,4 +37,8 @@ urlpatterns = [
     path('film_list', film_list_view),
     path('film_detail/<int:film_id>', film_detail_view),
     path('film_create', film_create_view),
+    path('film_update/<int:film_id>', film_update_view),
+    path('film_delete_view/<int:film_id>', film_delete_view, name='film_delete_url'),
+    path('login', login_view),
+    path('logout', logout_view),
 ]
